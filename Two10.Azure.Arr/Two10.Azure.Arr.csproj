@@ -71,9 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRole.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="requestRouter_amd64_en-US.msi">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
