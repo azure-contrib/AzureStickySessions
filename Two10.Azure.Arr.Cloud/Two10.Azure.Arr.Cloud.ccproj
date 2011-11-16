@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>1.5.0</ProductVersion>
-    <ProjectGuid>{19aad683-69b8-420a-9a07-11707ee1aa2d}</ProjectGuid>
+    <ProductVersion>1.6</ProductVersion>
+    <ProjectGuid>{20d8c41a-4462-4463-a87f-858d8f8480bf}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Two10.Azure.Arr</RootNamespace>
-    <AssemblyName>Two10.Azure.Arr</AssemblyName>
+    <RootNamespace>Two10.Azure.Arr.Cloud</RootNamespace>
+    <AssemblyName>Two10.Azure.Arr.Cloud</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>Two10.Azure.Arr.Cloud</Name>
   </PropertyGroup>
@@ -54,10 +54,16 @@
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Profiles" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\two10raStaging.azurePubxml" />
+  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
-    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\1.5\</CloudExtensionsDir>
+    <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\1.6\</CloudExtensionsDir>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
 </Project>

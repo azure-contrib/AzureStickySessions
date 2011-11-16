@@ -160,58 +160,7 @@ namespace Two10.Azure.Arr
 
 
 
-        public static void UpdateBindingInformation(string hostName)
-        {
-
-            using (ServerManager serverManager = new ServerManager())
-            {
-                bool voteCommit = false;
-                Configuration config = serverManager.GetApplicationHostConfiguration();
-
-                ConfigurationSection sitesSection = config.GetSection("system.applicationHost/sites");
-
-                ConfigurationElementCollection sitesCollection = sitesSection.GetCollection();
-
-                ConfigurationElement siteElement = sitesCollection[0];
-                if (siteElement == null) throw new InvalidOperationException("Element not found!");
-
-
-                ConfigurationElementCollection bindingsCollection = siteElement.GetCollection("bindings");
-
-                ConfigurationElement bindingElement = FindElement(bindingsCollection, "binding", "protocol", @"http");
-                if (bindingElement == null) throw new InvalidOperationException("Element not found!");
-
-                if (bindingElement["bindingInformation"] as string != @"*:80:" + hostName)
-                {
-                    bindingElement["bindingInformation"] = @"*:80:" + hostName;
-                    voteCommit = true;
-                }
-
-                ConfigurationElementCollection siteCollection = siteElement.GetCollection();
-
-                ConfigurationElement applicationElement = FindElement(siteCollection, "application", "path", @"/");
-                if (applicationElement == null) throw new InvalidOperationException("Element not found!");
-
-
-                ConfigurationElementCollection applicationCollection = applicationElement.GetCollection();
-
-                ConfigurationElement virtualDirectoryElement = FindElement(applicationCollection, "virtualDirectory", "path", @"/");
-                if (virtualDirectoryElement == null) throw new InvalidOperationException("Element not found!");
-
-                if (virtualDirectoryElement["physicalPath"] as string != @"%SystemDrive%\inetpub\wwwroot")
-                {
-                    virtualDirectoryElement["physicalPath"] = @"%SystemDrive%\inetpub\wwwroot";
-                    voteCommit = true;
-                }
-
-                if (voteCommit)
-                {
-                    serverManager.CommitChanges();
-                }
-
-            }
-        }
-
+     
 
     }
 }

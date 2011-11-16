@@ -8,24 +8,26 @@
 
   **********************************************************************************************
 -->
-<ServiceDefinition name="Two10.Azure.Arr" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+<ServiceDefinition name="Two10.Azure.Arr.Cloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
   <WebRole name="Two10.Azure.Arr" vmsize="Small">
-    <Startup>
-      <Task commandLine="Startup.cmd" executionContext="elevated" taskType="simple" />
-    </Startup>
     <Runtime executionContext="elevated" />
+    <Startup>
+      <Task commandLine="Startup.cmd" executionContext="elevated" taskType="simple"></Task>
+    </Startup>
     <Sites>
-      <Site name="Web">
+      <Site name="Web2" physicalDirectory="..\Web2">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding endpointName="Endpoint2" name="Endpoint2" />
         </Bindings>
       </Site>
     </Sites>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
+      <InputEndpoint name="Endpoint2" protocol="http" port="90" />
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
       <Import moduleName="RemoteForwarder" />
     </Imports>
   </WebRole>
@@ -33,17 +35,16 @@
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
-          <Binding name="Endpoint2" endpointName="Internal" />
+          <Binding name="Endpoint1" endpointName="Internal" />
         </Bindings>
       </Site>
     </Sites>
-    <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8080" />
-      <InternalEndpoint name="Internal" protocol="http" port="8000" />
-    </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
     </Imports>
+    <Endpoints>
+      <InternalEndpoint name="Internal" protocol="http" port="80" />
+    </Endpoints>
   </WebRole>
 </ServiceDefinition>

@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -30,17 +29,11 @@ namespace Two10.Azure.Arr
         {
             get
             {
-                return ConfigurationManager.AppSettings["RoleName"];
+                return "WebRole1";
             }
         }
 
-        public string PublicUrl
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["PublicUrl"];
-            }
-        }
+
 
         private IEnumerable<RoleInstance> Instances
         {
@@ -53,7 +46,7 @@ namespace Two10.Azure.Arr
         public override bool OnStart()
         {
             Log("OnStart");
-            IISconfiguration.UpdateBindingInformation(this.PublicUrl);
+
             return base.OnStart();
         }
 
@@ -66,6 +59,7 @@ namespace Two10.Azure.Arr
                 try
                 {
                     var endpoints = this.Instances.Select(i => i.InstanceEndpoints["Internal"].IPEndpoint).ToArray();
+                    Log("Endpoints = " + endpoints.Length);
                     IISconfiguration.AddServers("farm", endpoints);
                 }
                 catch (Exception ex)
@@ -79,6 +73,10 @@ namespace Two10.Azure.Arr
 
         private void Log(string message)
         {
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter("log.log", true))
+            {
+                file.WriteLine(message);
+            }
             System.Diagnostics.Trace.Write(message);
         }
 
