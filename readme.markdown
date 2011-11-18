@@ -18,8 +18,7 @@ Configuration
 -------------
 Two10.Azure.Arr has the following settings:
 
-- __RoleName__: The name of the role you wish to load balance to (i.e. WebRole1).
-- __PublicUrl__: The public address of the site (i.e. APPLICATION.cloudapp.net).
+- __RoleName__: The name of the role you wish to load balance to (i.e. WebRole1). This is currently hard coded in the WebRole class.
 
 The role being load balanced much have an internal endpoint configured, called 'Internal' (case sensitive).
 
