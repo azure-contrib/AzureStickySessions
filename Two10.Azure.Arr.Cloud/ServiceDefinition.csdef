@@ -9,13 +9,13 @@
     <Sites>
       <Site name="Web2" physicalDirectory="..\Web2">
         <Bindings>
-          <Binding endpointName="Endpoint2" name="Endpoint2"/>
+          <Binding endpointName="Endpoint2" name="Endpoint2" />
         </Bindings>
       </Site>
     </Sites>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
-      <InputEndpoint name="Endpoint2" protocol="http" port="90" />
+      <InternalEndpoint name="Endpoint2" protocol="http" port="90" />
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
