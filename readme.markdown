@@ -24,4 +24,4 @@ The role being load balanced much have an internal endpoint configured, called '
 
 About
 -----
-AzureSugar was written by Richard Astbury. For more information, or Azure consultancy, please contact two10 degrees: http://www.two10degrees.com/ 
+AzureARR was written by Richard Astbury. For more information, or Azure consultancy, please contact two10 degrees: http://www.two10degrees.com/ 
