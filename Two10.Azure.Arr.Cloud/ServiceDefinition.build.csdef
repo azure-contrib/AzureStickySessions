@@ -8,7 +8,7 @@
 
   **********************************************************************************************
 -->
-<ServiceDefinition name="Two10.Azure.Arr.Cloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+<ServiceDefinition name="Two10.Azure.Arr.Cloud" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2012-05.1.7">
   <WebRole name="Two10.Azure.Arr" vmsize="Small">
     <Runtime executionContext="elevated" />
     <Startup>
@@ -23,7 +23,7 @@
     </Sites>
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
-      <InputEndpoint name="Endpoint2" protocol="http" port="90" />
+      <InternalEndpoint name="Endpoint2" protocol="http" port="90" />
     </Endpoints>
     <Imports>
       <Import moduleName="Diagnostics" />
