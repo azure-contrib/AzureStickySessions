@@ -4,6 +4,8 @@ A Web Role which will act as a sticky session load balancer for a given Role in 
 
 ## How it works
 
+Web traffic is proxied through a role which adds a cookie to the HTTP response. On subsequent requests this cookie is used to route the request back to the same server.
+
 In the solution are three projects.
 
 * __Two10.Azure.Arr.Cloud__ The Cloud project which will deploy the solution to Azure.
