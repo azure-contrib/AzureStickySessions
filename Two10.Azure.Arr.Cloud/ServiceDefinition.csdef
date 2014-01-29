@@ -7,7 +7,7 @@
       </Task>
     </Startup>
     <Sites>
-      <Site name="Web2" physicalDirectory="..\Web2">
+      <Site name="Web2" physicalDirectory="..\..\..\Web2">
         <Bindings>
           <Binding endpointName="Endpoint2" name="Endpoint2" />
         </Bindings>

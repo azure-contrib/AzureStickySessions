@@ -60,7 +60,6 @@
     <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\two10raStaging.azurePubxml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ExampleWebApplicationContent\diagnostics.wadcfg">

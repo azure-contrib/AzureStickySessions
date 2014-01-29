@@ -9,19 +9,19 @@ namespace Two10.Azure.Arr
 {
     public class WebRole : RoleEntryPoint
     {
-        public string RoleName
-        {
-            get
-            {
-                return "WebRole1";
-            }
-        }
 
-        private IEnumerable<RoleInstance> Instances
+        private IEnumerable<RoleInstance> Instances()
         {
-            get
+            // select all instances that aren't on this role
+            foreach (var role in RoleEnvironment.Roles.Keys)
             {
-                return RoleEnvironment.Roles[this.RoleName].Instances;
+                if (role != RoleEnvironment.CurrentRoleInstance.Role.Name)
+                {
+                    foreach (var instance in RoleEnvironment.Roles[role].Instances)
+                    {
+                        yield return instance;
+                    }
+                }
             }
         }
 
@@ -40,7 +40,7 @@ namespace Two10.Azure.Arr
             {
                 try
                 {
-                    var endpoints = this.Instances.Select(i => i.InstanceEndpoints["Internal"].IPEndpoint).ToArray();
+                    var endpoints = this.Instances().Select(i => i.InstanceEndpoints["Internal"].IPEndpoint).ToArray();
                     Log("Endpoints = " + endpoints.Length);
                     IISconfiguration.AddServers("farm", endpoints);
                 }
