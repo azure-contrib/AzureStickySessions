@@ -3,7 +3,8 @@
   <WebRole name="Two10.Azure.Arr" vmsize="Small">
     <Runtime executionContext="elevated" />
     <Startup>
-      <Task commandLine="Startup.cmd" executionContext="elevated" taskType="simple"></Task>
+      <Task commandLine="Startup.cmd" executionContext="elevated" taskType="simple">
+      </Task>
     </Startup>
     <Sites>
       <Site name="Web2" physicalDirectory="..\Web2">
@@ -17,12 +18,9 @@
       <InternalEndpoint name="Endpoint2" protocol="http" port="90" />
     </Endpoints>
     <Imports>
-      <Import moduleName="Diagnostics" />
-      <Import moduleName="RemoteAccess" />
-      <Import moduleName="RemoteForwarder" />
     </Imports>
   </WebRole>
-  <WebRole name="WebRole1" vmsize="Small">
+  <WebRole name="ExampleWebApplication" vmsize="Small">
     <Sites>
       <Site name="Web">
         <Bindings>
@@ -31,8 +29,6 @@
       </Site>
     </Sites>
     <Imports>
-      <Import moduleName="Diagnostics" />
-      <Import moduleName="RemoteAccess" />
     </Imports>
     <Endpoints>
       <InternalEndpoint name="Internal" protocol="http" port="80" />

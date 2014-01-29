@@ -38,6 +38,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExampleWebApplication\ExampleWebApplication.csproj">
+      <Name>ExampleWebApplication</Name>
+      <Project>{b46bef2b-506b-4c3c-8e37-c2936b0a76ef}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>ExampleWebApplication</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\Two10.Azure.Arr\Two10.Azure.Arr.csproj">
       <Name>Two10.Azure.Arr</Name>
       <Project>{1be4d9b8-6504-476c-a6c6-7dff7d3b519d}</Project>
@@ -46,20 +54,18 @@
       <RoleName>Two10.Azure.Arr</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-    <ProjectReference Include="..\WebRole1\WebRole1.csproj">
-      <Name>WebRole1</Name>
-      <Project>{c5da69b8-48c7-432b-8040-9b134b3b45c7}</Project>
-      <Private>True</Private>
-      <RoleType>Web</RoleType>
-      <RoleName>WebRole1</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ExampleWebApplicationContent\" />
     <Folder Include="Profiles" />
   </ItemGroup>
   <ItemGroup>
     <PublishProfile Include="Profiles\two10raStaging.azurePubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExampleWebApplicationContent\diagnostics.wadcfg">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
