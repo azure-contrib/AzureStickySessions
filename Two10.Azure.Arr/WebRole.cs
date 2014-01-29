@@ -15,11 +15,12 @@
 //
 #endregion
 
+using Microsoft.WindowsAzure.ServiceRuntime;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
-using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace Two10.Azure.Arr
 {
@@ -32,8 +33,6 @@ namespace Two10.Azure.Arr
                 return "WebRole1";
             }
         }
-
-
 
         private IEnumerable<RoleInstance> Instances
         {
@@ -73,7 +72,7 @@ namespace Two10.Azure.Arr
 
         private void Log(string message)
         {
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter("log.log", true))
+            using (var file = new StreamWriter("log.log", true))
             {
                 file.WriteLine(message);
             }

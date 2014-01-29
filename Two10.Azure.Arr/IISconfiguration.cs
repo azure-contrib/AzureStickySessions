@@ -15,9 +15,9 @@
 //
 #endregion
 
+using Microsoft.Web.Administration;
 using System;
 using System.Net;
-using Microsoft.Web.Administration;
 
 namespace Two10.Azure.Arr
 {
@@ -27,13 +27,11 @@ namespace Two10.Azure.Arr
         public static ConfigurationElement GetOrCreateFarm(string farmName)
         {
 
-            using (ServerManager serverManager = new ServerManager())
+            using (var serverManager = new ServerManager())
             {
-                Configuration config = serverManager.GetApplicationHostConfiguration();
-
-                ConfigurationSection webFarmsSection = config.GetSection("webFarms");
-
-                ConfigurationElementCollection webFarmsCollection = webFarmsSection.GetCollection();
+                var config = serverManager.GetApplicationHostConfiguration();
+                var webFarmsSection = config.GetSection("webFarms");
+                var webFarmsCollection = webFarmsSection.GetCollection();
 
                 var el = FindElement(webFarmsCollection, "webFarm", "name", farmName);
                 if (null != el)
@@ -41,13 +39,13 @@ namespace Two10.Azure.Arr
                     return el;
                 }
 
-                ConfigurationElement webFarmElement = webFarmsCollection.CreateElement("webFarm");
+                var webFarmElement = webFarmsCollection.CreateElement("webFarm");
                 webFarmElement["name"] = farmName;
                 webFarmsCollection.Add(webFarmElement);
 
-                ConfigurationElement applicationRequestRoutingElement = webFarmElement.GetChildElement("applicationRequestRouting");
+                var applicationRequestRoutingElement = webFarmElement.GetChildElement("applicationRequestRouting");
 
-                ConfigurationElement affinityElement = applicationRequestRoutingElement.GetChildElement("affinity");
+                var affinityElement = applicationRequestRoutingElement.GetChildElement("affinity");
                 affinityElement["useCookie"] = true;
 
                 serverManager.CommitChanges();
@@ -62,20 +60,15 @@ namespace Two10.Azure.Arr
         public static void AddServers(string farmName, IPEndPoint[] endpoints)
         {
 
-            using (ServerManager serverManager = new ServerManager())
+            using (var serverManager = new ServerManager())
             {
-
-                Configuration config = serverManager.GetApplicationHostConfiguration();
-
-                ConfigurationSection webFarmsSection = config.GetSection("webFarms");
-
-                ConfigurationElementCollection webFarmsCollection = webFarmsSection.GetCollection();
-
-                ConfigurationElement webFarmElement = FindElement(webFarmsCollection, "webFarm", "name", farmName);
+                var config = serverManager.GetApplicationHostConfiguration();
+                var webFarmsSection = config.GetSection("webFarms");
+                var webFarmsCollection = webFarmsSection.GetCollection();
+                var webFarmElement = FindElement(webFarmsCollection, "webFarm", "name", farmName);
                 if (webFarmElement == null) throw new InvalidOperationException("Element not found!");
 
-
-                ConfigurationElementCollection webFarmCollection = webFarmElement.GetCollection();
+                var webFarmCollection = webFarmElement.GetCollection();
                 foreach (var endpoint in endpoints)
                 {
                     var server = FindElement(webFarmCollection, "server", "address", endpoint.Address.ToString());
@@ -85,10 +78,10 @@ namespace Two10.Azure.Arr
                         continue;
                     }
 
-                    ConfigurationElement serverElement = webFarmCollection.CreateElement("server");
+                    var serverElement = webFarmCollection.CreateElement("server");
                     serverElement["address"] = endpoint.Address.ToString();
 
-                    ConfigurationElement applicationRequestRoutingElement = serverElement.GetChildElement("applicationRequestRouting");
+                    var applicationRequestRoutingElement = serverElement.GetChildElement("applicationRequestRouting");
                     applicationRequestRoutingElement["httpPort"] = endpoint.Port;
                     webFarmCollection.Add(serverElement);
                 }
@@ -98,15 +91,15 @@ namespace Two10.Azure.Arr
 
         private static ConfigurationElement FindElement(ConfigurationElementCollection collection, string elementTagName, params string[] keyValues)
         {
-            foreach (ConfigurationElement element in collection)
+            foreach (var element in collection)
             {
                 if (String.Equals(element.ElementTagName, elementTagName, StringComparison.OrdinalIgnoreCase))
                 {
-                    bool matches = true;
+                    var matches = true;
 
-                    for (int i = 0; i < keyValues.Length; i += 2)
+                    for (var i = 0; i < keyValues.Length; i += 2)
                     {
-                        object o = element.GetAttributeValue(keyValues[i]);
+                        var o = element.GetAttributeValue(keyValues[i]);
                         string value = null;
                         if (o != null)
                         {
@@ -132,24 +125,22 @@ namespace Two10.Azure.Arr
         private static void CreateReWriteRule(string serverFarm)
         {
 
-            using (ServerManager serverManager = new ServerManager())
+            using (var serverManager = new ServerManager())
             {
-                Configuration config = serverManager.GetApplicationHostConfiguration();
+                var config = serverManager.GetApplicationHostConfiguration();
+                var globalRulesSection = config.GetSection("system.webServer/rewrite/globalRules");
+                var globalRulesCollection = globalRulesSection.GetCollection();
 
-                ConfigurationSection globalRulesSection = config.GetSection("system.webServer/rewrite/globalRules");
-
-                ConfigurationElementCollection globalRulesCollection = globalRulesSection.GetCollection();
-
-                ConfigurationElement ruleElement = globalRulesCollection.CreateElement("rule");
+                var ruleElement = globalRulesCollection.CreateElement("rule");
                 ruleElement["name"] = serverFarm;
                 ruleElement["patternSyntax"] = @"Wildcard";
                 ruleElement["stopProcessing"] = true;
 
-                ConfigurationElement matchElement = ruleElement.GetChildElement("match");
+                var matchElement = ruleElement.GetChildElement("match");
                 matchElement["url"] = @"*";
                 matchElement["ignoreCase"] = false;
 
-                ConfigurationElement actionElement = ruleElement.GetChildElement("action");
+                var actionElement = ruleElement.GetChildElement("action");
                 actionElement["type"] = @"Rewrite";
                 actionElement["url"] = string.Concat(@"http://", serverFarm, @"/{R:0}");
                 globalRulesCollection.Add(ruleElement);
@@ -157,10 +148,6 @@ namespace Two10.Azure.Arr
                 serverManager.CommitChanges();
             }
         }
-
-
-
-     
 
     }
 }
