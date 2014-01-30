@@ -1,5 +1,3 @@
-[![AzureDirectory Build Status](https://www.myget.org/BuildSource/Badge/windowsazure-contrib?identifier=efe2d0ca-8186-4873-af16-7e92bec899d1)](https://www.myget.org/gallery/windowsazure-contrib)
-
 # AzureStickySessions
 
 A Web Role which will act as a sticky session load balancer for a given Role in Azure.
