@@ -1,3 +1,7 @@
+# DEPRECATED
+
+Client IP affinity is now [a feature](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-distribution-mode#configuring-source-ip-affinity-settings-for-load-balancer) of the Azure platform.
+
 # AzureStickySessions
 
 A Web Role which will act as a sticky session load balancer for a given Role in Azure.
